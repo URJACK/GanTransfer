@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/component_nav.css">
+</head>
+
+<body>
+    <nav class="site-header sticky-top myNav">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('1')">发送接受配置</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('2')">可通信对象</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('3')">通信内容</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('4')">设置</a>
+        </div>
+    </nav>
+    <div class="container" id="app">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="../public/imgs/icon_recv.svg" alt="" width="72" height="72">
+            <h2>发送接受配置信息</h2>
+            <p class="lead">在这里，你可以在下面的表格内填写你自己作为发送方或者接受方的时候的相关配置信息。</p>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <h4>接收配置</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="firstName">Port</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="填写监听的端口号">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstName">Encryption Methods</label>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{recvEncryText}}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#" v-for="(ele,index) in encryList"
+                                    v-on:click="encryClick(index,true)">{{ele}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <h4>发送配置</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="firstName">Encryption Methods</label>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{sendEncryText}}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#" v-for="(ele,index) in encryList"
+                                    v-on:click="encryClick(index,false)">{{ele}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="button">保存配置</button>
+            </div>
+            <div class="col-md-4">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">状态信息</span>
+                    <span class="badge badge-secondary badge-pill">2</span>
+                </h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Host Name</h6>
+                            <small class="text-muted">对方与你链接时你的名字</small>
+                        </div>
+                        <span class="text-muted">风吹雪</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Received Historically</h6>
+                            <small class="text-muted">历史接收包数量</small>
+                        </div>
+                        <span class="text-muted">12</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Encryption Status</h6>
+                            <small class="text-muted">加密算法读取状态</small>
+                        </div>
+                        <span class="text-muted">成功</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Listening Status</h6>
+                            <small class="text-muted">监听状态</small>
+                        </div>
+                        <span class="text-muted">成功</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../public/js/component_nav.js"></script>
+<script src="../public/js/vue.js"></script>
+<script src="../public/js/jquery.slim.min.js"></script>
+<script src="../public/js/view_receiver.js"></script>
+<script src="../public/js/popper.min.js"></script>
+<script src="../public/js/bootstrap.min.js"></script>
+<script>
+    let app;
+    window.onload = function () {
+        app = new Vue({
+            el: "#app",
+            data: {
+                //监听端口号
+                listenPort: 6012,
+                //接收方加密
+                recvEncryType: 0,
+                //发送方加密
+                sendEncryType: 0,
+                encryList: encryList
+            },
+            computed: {
+                recvEncryText() {
+                    return this.encryList[this.recvEncryType]
+                },
+                sendEncryText() {
+                    return this.encryList[this.sendEncryType]
+                }
+            },
+            methods: {
+                //isRecv为true，代表更改接受端的加密方式。 否则更改发送端的接受方式
+                encryClick(index, isRecv) {
+                    if (isRecv) {
+                        this.recvEncryType = index
+                    } else {
+                        this.sendEncryType = index
+                    }
+                }
+            },
+            mounted() {
+                console.log("Reading Initial Datas From the Disks")
+            }
+        })
+    }
+
+</script>

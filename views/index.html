@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/view_index.css">
+    <link rel="stylesheet" href="../public/css/component_nav.css">
+</head>
+
+<body>
+    <nav class="site-header sticky-top myNav">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('1')">发送接受配置</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('2')">可通信对象</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('3')">通信内容</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('4')">设置</a>
+        </div>
+    </nav>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 font-weight-normal">GAN隐蔽通信器</h1>
+            <h1 class="display-6 font-weight-normal">GAN covert communicator</h1>
+            <p class="lead font-weight-normal">GAN covert communicator, is a use of InfoGAN technology for encrypted
+                communication software.Even if the traffic is stolen by others, it is difficult for others to use
+                ordinary decryption methods to crack the useful information.</p>
+            <a class="btn btn-outline-secondary" onclick="getProcessInfo()">Get Started</a>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../public/js/component_nav.js"></script>
+<script src="../public/js/view_index.js"></script>
+<script src="../public/js/vue.js"></script>
+<script src="../public/js/jquery.slim.min.js"></script>
+<script src="../public/js/popper.min.js"></script>
+<script src="../public/js/bootstrap.min.js"></script>

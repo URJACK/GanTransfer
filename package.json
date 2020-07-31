@@ -1,0 +1,14 @@
+{
+  "name": "gan_transfer",
+  "version": "1.0.0",
+  "description": "a demo which was build to create hidden packets",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^9.1.2"
+  }
+}

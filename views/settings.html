@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/component_nav.css">
+</head>
+
+<body>
+    <nav class="site-header sticky-top myNav">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('1')">发送接受配置</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('2')">可通信对象</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('3')">通信内容</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('4')">设置</a>
+        </div>
+    </nav>
+    <div class="container" id="app">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="../public/imgs/icon_recv.svg" alt="" width="72" height="72">
+            <h2>设置</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="firstName">本机名称</label>
+                <input type="text" class="form-control" id="firstName" placeholder="对方会显示我们的名称">
+            </div>
+            <div class="col-md-6">
+                <label for="firstName">存储路径</label>
+                <input type="text" class="form-control" id="firstName" placeholder="所有配置文件、及相关文件都会存在该路径">
+            </div>
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="button">保存设置</button>
+    </div>
+</body>
+
+</html>
+<script src="../public/js/component_nav.js"></script>
+<script src="../public/js/vue.js"></script>
+<script src="../public/js/jquery.slim.min.js"></script>
+<script src="../public/js/popper.min.js"></script>
+<script src="../public/js/bootstrap.min.js"></script>

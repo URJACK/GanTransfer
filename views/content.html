@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/component_nav.css">
+</head>
+
+<body>
+    <nav class="site-header sticky-top myNav">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('1')">发送接受配置</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('2')">可通信对象</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('3')">通信内容</a>
+            <a class="py-2 d-none d-md-inline-block" href="#" onclick="changeView('4')">设置</a>
+        </div>
+    </nav>
+    <div class="container" id="app">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="../public/imgs/icon_recv.svg" alt="" width="72" height="72">
+            <h2>通信内容</h2>
+            <p class="lead">这是与 <a href="#" class="alert-link">风吹雪</a> 的通信内容</p>
+        </div>
+        <div class="alert alert-primary" role="alert">
+            A simple primary alert with .
+        </div>
+        <div class="alert alert-secondary" role="alert">
+            A simple primary alert with .
+        </div>
+        <hr class="mb-4">
+        <label for="firstName">发送内容</label>
+        <div class="row">
+            <div class="col-md-9">
+                <input type="text" class="form-control" placeholder="填写你需要发送的内容">
+            </div>
+            <div class="col-md-2">
+                <input type="number" class="form-control" placeholder="接收端口号">
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-primary" type="button">send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../public/js/component_nav.js"></script>
+<script src="../public/js/vue.js"></script>
+<script src="../public/js/jquery.slim.min.js"></script>
+<script src="../public/js/popper.min.js"></script>
+<script src="../public/js/bootstrap.min.js"></script>
