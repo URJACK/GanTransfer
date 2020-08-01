@@ -30,6 +30,9 @@ class Group {
     getMenbers(): Array<Member> {
         return this.menbers;
     }
+    getMember(index: number): Member {
+        return this.menbers[index]
+    }
     getLength(): number {
         return this.menbers.length;
     }
@@ -67,7 +70,7 @@ function addGroup(name: string): boolean {
     groups.push(new Group(name))
     return true;
 }
-function deleteGroup(name: string) {
+function deleteGroup(name: string): boolean {
     for (let i = 0; i < groups.length; ++i) {
         if (groups[i].name == name) {
             groups.splice(i, i)
@@ -76,28 +79,48 @@ function deleteGroup(name: string) {
     }
     return false;
 }
-function addMenber(groupName: string, name: string, ip: string) {
-    //开始查询组
+function getGroup(groupName: string): Group | null {
     for (let i = 0; i < groups.length; ++i) {
-        let localGroup: Group = groups[i];
-        if (localGroup.name == groupName) {
-            let newMember = new Member(name, ip)
-            return localGroup.addMember(newMember)
+        let group: Group = groups[i];
+        if (group.name == groupName) {
+            return group
         }
     }
-    //未找到组
-    return false
+    return null
 }
-//添加一个新成员 只有同名的组 并且组内必须没有该成员 才可以添加
-module.exports.addMenber = addMenber
-function deleteMenber(groupName: string, name: string) {
-    for (let i = 0; i < groups.length; ++i) {
-        let localGroup = groups[i];
-        if (localGroup.name == groupName) {
-            return localGroup.deleteMember(name)
+function addMenber(groupName: string, memberName: string, ip: string): boolean {
+    let group: Group | null = getGroup(groupName)
+    if (group == null) {
+        return false
+    }
+    let newMember = new Member(memberName, ip)
+    return group.addMember(newMember)
+}
+function deleteMenber(groupName: string, memberName: string) {
+    let group: Group | null = getGroup(groupName)
+    if (group == null) {
+        return false
+    }
+    return group.deleteMember(memberName)
+}
+function getAllInfo(): Array<Group> {
+    return groups;
+}
+function getGroupByName(groupName: string): Group | null {
+    return getGroup(groupName)
+}
+function getMember(groupName: string, memberName: string): Member | null {
+    let localGroup: Group | null = getGroup(groupName)
+    if (localGroup == null) {
+        return null
+    }
+    let members: Array<Member> = localGroup.getMenbers()
+    for (let i = 0; i < members.length; i++) {
+        let member = members[i];
+        if (member.name == memberName) {
+            return member;
         }
     }
-    //未找到组
-    return false;
+    return null
 }
-export { addGroup, deleteGroup, addMenber, deleteMenber }
+export { addGroup, deleteGroup, addMenber, deleteMenber, getAllInfo, getGroupByName, getMember }

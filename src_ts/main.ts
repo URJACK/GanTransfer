@@ -1,8 +1,13 @@
-import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron'
+import { app, BrowserWindow, globalShortcut } from 'electron'
 import * as beforeStart from './modules/beforeStart'
 import * as  storageManager from './modules/storageManager'
+import { IpcServiceRouter } from './modules/ipcServiceRouter'
+//声明主窗口
 let mainWindow: BrowserWindow;
+//声明渲染进程通讯处理器
+let ipcServiceRouter: IpcServiceRouter;
 function createWindow() {
+    //创建主窗口
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -11,6 +16,8 @@ function createWindow() {
             nodeIntegration: true
         }
     })
+    //创建渲染进程通讯处理器
+    ipcServiceRouter = new IpcServiceRouter(mainWindow)
     mainWindow.webContents.on('did-finish-load', () => {
         console.log("did finish load")
     })
@@ -31,10 +38,6 @@ app.on('ready', () => {
     globalShortcut.register('CommandOrControl+Q', () => {
         mainWindow.loadFile(storageManager.getLeftPath())
     })
-})
-//监听渲染进程的页面跳转请求
-ipcMain.on('view', (e, args) => {
-    mainWindow.loadFile(storageManager.getViewPath(args))
 })
 
 beforeStart.endProcess(app, globalShortcut)

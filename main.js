@@ -22,8 +22,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var electron_1 = require("electron");
 var beforeStart = __importStar(require("./modules/beforeStart"));
 var storageManager = __importStar(require("./modules/storageManager"));
+var ipcServiceRouter_1 = require("./modules/ipcServiceRouter");
+//声明主窗口
 var mainWindow;
+//声明渲染进程通讯处理器
+var ipcServiceRouter;
 function createWindow() {
+    //创建主窗口
     mainWindow = new electron_1.BrowserWindow({
         width: 800,
         height: 600,
@@ -32,6 +37,8 @@ function createWindow() {
             nodeIntegration: true
         }
     });
+    //创建渲染进程通讯处理器
+    ipcServiceRouter = new ipcServiceRouter_1.IpcServiceRouter(mainWindow);
     mainWindow.webContents.on('did-finish-load', function () {
         console.log("did finish load");
     });
@@ -52,9 +59,5 @@ electron_1.app.on('ready', function () {
     electron_1.globalShortcut.register('CommandOrControl+Q', function () {
         mainWindow.loadFile(storageManager.getLeftPath());
     });
-});
-//监听渲染进程的页面跳转请求
-electron_1.ipcMain.on('view', function (e, args) {
-    mainWindow.loadFile(storageManager.getViewPath(args));
 });
 beforeStart.endProcess(electron_1.app, electron_1.globalShortcut);

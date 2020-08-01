@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMenber = exports.addMenber = exports.deleteGroup = exports.addGroup = void 0;
+exports.getMember = exports.getGroupByName = exports.getAllInfo = exports.deleteMenber = exports.addMenber = exports.deleteGroup = exports.addGroup = void 0;
 var Content = /** @class */ (function () {
     function Content(isMe, text) {
         this.isMe = isMe;
@@ -27,6 +27,9 @@ var Group = /** @class */ (function () {
     }
     Group.prototype.getMenbers = function () {
         return this.menbers;
+    };
+    Group.prototype.getMember = function (index) {
+        return this.menbers[index];
     };
     Group.prototype.getLength = function () {
         return this.menbers.length;
@@ -77,29 +80,52 @@ function deleteGroup(name) {
     return false;
 }
 exports.deleteGroup = deleteGroup;
-function addMenber(groupName, name, ip) {
-    //开始查询组
+function getGroup(groupName) {
     for (var i = 0; i < groups.length; ++i) {
-        var localGroup = groups[i];
-        if (localGroup.name == groupName) {
-            var newMember = new Member(name, ip);
-            return localGroup.addMember(newMember);
+        var group = groups[i];
+        if (group.name == groupName) {
+            return group;
         }
     }
-    //未找到组
-    return false;
+    return null;
+}
+function addMenber(groupName, memberName, ip) {
+    var group = getGroup(groupName);
+    if (group == null) {
+        return false;
+    }
+    var newMember = new Member(memberName, ip);
+    return group.addMember(newMember);
 }
 exports.addMenber = addMenber;
-//添加一个新成员 只有同名的组 并且组内必须没有该成员 才可以添加
-module.exports.addMenber = addMenber;
-function deleteMenber(groupName, name) {
-    for (var i = 0; i < groups.length; ++i) {
-        var localGroup = groups[i];
-        if (localGroup.name == groupName) {
-            return localGroup.deleteMember(name);
-        }
+function deleteMenber(groupName, memberName) {
+    var group = getGroup(groupName);
+    if (group == null) {
+        return false;
     }
-    //未找到组
-    return false;
+    return group.deleteMember(memberName);
 }
 exports.deleteMenber = deleteMenber;
+function getAllInfo() {
+    return groups;
+}
+exports.getAllInfo = getAllInfo;
+function getGroupByName(groupName) {
+    return getGroup(groupName);
+}
+exports.getGroupByName = getGroupByName;
+function getMember(groupName, memberName) {
+    var localGroup = getGroup(groupName);
+    if (localGroup == null) {
+        return null;
+    }
+    var members = localGroup.getMenbers();
+    for (var i = 0; i < members.length; i++) {
+        var member = members[i];
+        if (member.name == memberName) {
+            return member;
+        }
+    }
+    return null;
+}
+exports.getMember = getMember;
