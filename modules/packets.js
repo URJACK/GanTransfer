@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransferPacket = exports.TransferType = void 0;
+exports.TransferType = void 0;
 var TransferType;
 (function (TransferType) {
     TransferType[TransferType["AddGroup"] = 1] = "AddGroup";
@@ -12,11 +12,3 @@ var TransferType;
     TransferType[TransferType["GetMember"] = 7] = "GetMember";
 })(TransferType || (TransferType = {}));
 exports.TransferType = TransferType;
-var TransferPacket = /** @class */ (function () {
-    function TransferPacket(type, data) {
-        this.type = type;
-        this.data = data;
-    }
-    return TransferPacket;
-}());
-exports.TransferPacket = TransferPacket;

@@ -19,61 +19,98 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransferPacket = exports.TransferType = exports.TransferHandler = void 0;
+exports.TransferType = exports.TransferHandler = void 0;
 var StorageManager = __importStar(require("./storageManager"));
 var packets_1 = require("./packets");
 Object.defineProperty(exports, "TransferType", { enumerable: true, get: function () { return packets_1.TransferType; } });
-Object.defineProperty(exports, "TransferPacket", { enumerable: true, get: function () { return packets_1.TransferPacket; } });
 var TransferHandler = /** @class */ (function () {
     function TransferHandler() {
     }
     TransferHandler.prototype.dataOperate = function (e) {
         if (e.type == packets_1.TransferType.AddGroup) {
             if (e.data.groupName == null) {
-                return false;
+                e.status = false;
+                return e;
             }
-            return StorageManager.addGroup(e.data.groupName);
+            e.data = StorageManager.addGroup(e.data.groupName);
+            if (e.data != null) {
+                e.status = true;
+            }
+            else {
+                e.status = false;
+            }
+            return e;
         }
         else if (e.type == packets_1.TransferType.DeleteGroup) {
             var packet = { groupName: e.data.groupName };
             if (e.data.groupName == null) {
-                return false;
+                e.status = false;
+                return e;
             }
-            return StorageManager.deleteGroup(e.data.groupName);
+            e.data = StorageManager.deleteGroup(e.data.groupName);
+            if (e.data != null) {
+                e.status = true;
+            }
+            else {
+                e.status = false;
+            }
+            return e;
         }
         else if (e.type == packets_1.TransferType.AddMember) {
             var packet = { groupName: e.data.groupName, memberName: e.data.memberName, ip: e.data.ip };
             if (e.data.groupName == null || e.data.memberName == null || e.data.ip == null) {
-                return false;
+                e.status = false;
+                return e;
             }
-            return StorageManager.addMenber(e.data.groupName, e.data.memberName, e.data.ip);
+            e.status = StorageManager.addMenber(e.data.groupName, e.data.memberName, e.data.ip);
+            return e;
         }
         else if (e.type == packets_1.TransferType.DeleteMember) {
             var packet = { groupName: e.data.groupName, memberName: e.data.memberName };
             if (packet.groupName == null || packet.memberName == null || packet.ip == null) {
-                return false;
+                e.status = false;
             }
-            return StorageManager.deleteMenber(packet.groupName, packet.memberName);
+            else {
+                e.status = StorageManager.deleteMenber(packet.groupName, packet.memberName);
+            }
+            return e;
         }
         else {
-            return false;
+            e.status = false;
+            return e;
         }
     };
     TransferHandler.prototype.dataGet = function (e) {
         if (e.type == packets_1.TransferType.GetAllGroup) {
-            return StorageManager.getAllInfo();
+            e.status = true;
+            e.data = StorageManager.getAllInfo();
+            return e;
         }
         else if (e.type == packets_1.TransferType.GetGroup) {
             if (e.data.groupName == null) {
-                return null;
+                e.status = false;
+                e.data = null;
             }
-            return StorageManager.getGroupByName(e.data.groupName);
+            else {
+                e.status = true;
+                e.data = StorageManager.getGroupByName(e.data.groupName);
+            }
+            return e;
         }
         else if (e.type == packets_1.TransferType.GetMember) {
             if (e.data.groupName == null || e.data.memberName == null) {
-                return null;
+                e.status = false;
+                e.data = null;
             }
-            return StorageManager.getMember(e.data.groupName, e.data.memberName);
+            else {
+                e.status = false;
+                e.data = StorageManager.getMember(e.data.groupName, e.data.memberName);
+            }
+            return e;
+        }
+        else {
+            e.status = false;
+            return e;
         }
     };
     return TransferHandler;

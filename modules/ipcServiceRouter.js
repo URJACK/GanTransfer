@@ -33,14 +33,18 @@ var IpcServiceRouter = /** @class */ (function () {
         });
         electron_1.ipcMain.on('conn', function (e, args) {
             var type = args.type;
-            var packet = new transfer_1.TransferPacket(type, args.data);
-            transferHandler.dataOperate(packet);
+            var packet = { type: type, data: args.data };
+            packet = transferHandler.dataOperate(packet);
+            console.log(packet);
+            e.reply('conn', packet);
         });
         electron_1.ipcMain.on('conn_data', function (e, args) {
             var type = args.type;
-            var packet = new transfer_1.TransferPacket(type, args.data);
-            var data = transferHandler.dataGet(packet);
-            e.reply(data);
+            var packet = { type: type, data: args.data };
+            packet = transferHandler.dataGet(packet);
+            console.log(packet);
+            console.log(packet.data);
+            e.reply('conn_data', packet);
         });
     }
     return IpcServiceRouter;

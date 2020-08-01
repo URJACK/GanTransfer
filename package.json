@@ -4,7 +4,8 @@
   "description": "a demo which was build to create hidden packets",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "ts": "tsc"
   },
   "author": "",
   "license": "ISC",

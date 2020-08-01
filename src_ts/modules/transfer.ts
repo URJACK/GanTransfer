@@ -2,48 +2,81 @@ import * as StorageManager from './storageManager'
 import { TransferType, TransferPacket, ConnectorPacket } from './packets'
 
 class TransferHandler {
-    dataOperate(e: TransferPacket): boolean {
+    dataOperate(e: TransferPacket): TransferPacket {
         if (e.type == TransferType.AddGroup) {
             if (e.data.groupName == null) {
-                return false
+                e.status = false
+                return e
             }
-            return StorageManager.addGroup(e.data.groupName)
+            e.data = StorageManager.addGroup(e.data.groupName)
+            if (e.data != null) {
+                e.status = true
+            } else {
+                e.status = false
+            }
+            return e
         } else if (e.type == TransferType.DeleteGroup) {
             let packet: ConnectorPacket = { groupName: e.data.groupName }
             if (e.data.groupName == null) {
-                return false
+                e.status = false
+                return e;
             }
-            return StorageManager.deleteGroup(e.data.groupName)
+            e.data = StorageManager.deleteGroup(e.data.groupName)
+            if (e.data != null) {
+                e.status = true
+            } else {
+                e.status = false
+            }
+            return e;
         } else if (e.type == TransferType.AddMember) {
             let packet: ConnectorPacket = { groupName: e.data.groupName, memberName: e.data.memberName, ip: e.data.ip }
             if (e.data.groupName == null || e.data.memberName == null || e.data.ip == null) {
-                return false
+                e.status = false
+                return e
             }
-            return StorageManager.addMenber(e.data.groupName, e.data.memberName, e.data.ip)
+            e.status = StorageManager.addMenber(e.data.groupName, e.data.memberName, e.data.ip)
+            return e
 
         } else if (e.type == TransferType.DeleteMember) {
             let packet: ConnectorPacket = { groupName: e.data.groupName, memberName: e.data.memberName }
             if (packet.groupName == null || packet.memberName == null || packet.ip == null) {
-                return false
+                e.status = false
             }
-            return StorageManager.deleteMenber(packet.groupName, packet.memberName)
+            else {
+                e.status = StorageManager.deleteMenber(packet.groupName, packet.memberName)
+            }
+            return e
         } else {
-            return false
+            e.status = false
+            return e
         }
     }
-    dataGet(e: TransferPacket): any {
+    dataGet(e: TransferPacket): TransferPacket {
         if (e.type == TransferType.GetAllGroup) {
-            return StorageManager.getAllInfo()
+            e.status = true
+            e.data = StorageManager.getAllInfo()
+            return e
         } else if (e.type == TransferType.GetGroup) {
             if (e.data.groupName == null) {
-                return null
+                e.status = false
+                e.data = null
+            } else {
+                e.status = true
+                e.data = StorageManager.getGroupByName(e.data.groupName)
             }
-            return StorageManager.getGroupByName(e.data.groupName)
+            return e
         } else if (e.type == TransferType.GetMember) {
             if (e.data.groupName == null || e.data.memberName == null) {
-                return null
+                e.status = false
+                e.data = null
+            } else {
+                e.status = false
+                e.data = StorageManager.getMember(e.data.groupName, e.data.memberName)
             }
-            return StorageManager.getMember(e.data.groupName, e.data.memberName)
+            return e
+        } else {
+            e.status = false
+            return e
         }
     }
 }

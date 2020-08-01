@@ -13,14 +13,18 @@ class IpcServiceRouter {
         })
         ipcMain.on('conn', (e, args) => {
             let type: TransferType = args.type
-            let packet = new TransferPacket(type, args.data)
-            transferHandler.dataOperate(packet)
+            let packet: TransferPacket = { type: type, data: args.data };
+            packet = transferHandler.dataOperate(packet);
+            console.log(packet)
+            e.reply('conn', packet)
         })
         ipcMain.on('conn_data', (e, args) => {
             let type: TransferType = args.type
-            let packet = new TransferPacket(type, args.data)
-            let data = transferHandler.dataGet(packet)
-            e.reply(data)
+            let packet: TransferPacket = { type: type, data: args.data }
+            packet = transferHandler.dataGet(packet)
+            console.log(packet)
+            console.log(packet.data)
+            e.reply('conn_data', packet)
         })
     }
 }

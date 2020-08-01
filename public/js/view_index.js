@@ -7,5 +7,5 @@ function getProcessInfo() {
     console.log("env ", process.env)
     console.log("arch ", process.arch)
     console.log("platform ", process.platform)
-    changeView('receiver_sender')
+    changeView(1)
 }

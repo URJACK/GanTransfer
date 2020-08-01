@@ -1,11 +1,8 @@
 enum TransferType { AddGroup = 1, DeleteGroup, AddMember, DeleteMember, GetAllGroup, GetGroup, GetMember }
-class TransferPacket {
+interface TransferPacket {
     type: TransferType;
-    data: ConnectorPacket;
-    constructor(type: TransferType, data: any) {
-        this.type = type
-        this.data = data
-    }
+    status?: boolean;
+    data: ConnectorPacket | any;
 }
 interface ConnectorPacket {
     groupName?: string;

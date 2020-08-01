@@ -1,3 +1,5 @@
+// const { ipcRenderer } = require("electron");
+
 let app;
 window.onload = function () {
     app = new Vue({
