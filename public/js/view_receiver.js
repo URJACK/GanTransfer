@@ -1,1 +1,0 @@
-const { remote } = window.Myrequire('electron')
