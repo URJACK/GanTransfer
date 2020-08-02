@@ -65,12 +65,13 @@ var TransferHandler = /** @class */ (function () {
             return e;
         }
         else if (e.type == packets_1.TransferType.DeleteMember) {
-            var packet = { groupName: e.data.groupName, memberName: e.data.memberName };
-            if (packet.groupName == null || packet.memberName == null || packet.ip == null) {
+            console.log("DEBUG");
+            console.log("DeleteMember");
+            if (e.data.groupName == null || e.data.memberName == null) {
                 e.status = false;
             }
             else {
-                e.status = StorageManager.deleteMember(packet.groupName, packet.memberName);
+                e.status = StorageManager.deleteMember(e.data.groupName, e.data.memberName);
             }
             return e;
         }

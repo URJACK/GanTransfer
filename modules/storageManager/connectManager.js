@@ -51,10 +51,13 @@ var Group = /** @class */ (function () {
         return true;
     };
     Group.prototype.deleteMember = function (name) {
+        console.log("DEBUG deleteMember");
+        console.log(this.members);
         for (var i = 0; i < this.members.length; ++i) {
             if (this.members[i].name == name) {
                 //发现同名用户
-                this.members.splice(i, i);
+                this.members.splice(i, 1);
+                console.log(this.members);
                 return true;
             }
         }
@@ -104,6 +107,10 @@ function addMember(groupName, memberName, ip) {
 exports.addMember = addMember;
 function deleteMember(groupName, memberName) {
     var group = getGroup(groupName);
+    console.log("DEBUG");
+    console.log(groupName);
+    console.log(memberName);
+    console.log(group);
     if (group == null) {
         return false;
     }

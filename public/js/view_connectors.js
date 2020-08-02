@@ -1,5 +1,3 @@
-// const { ipcRenderer } = require("electron");
-
 let app;
 const TYPE = new ConnType()
 window.onload = function () {
@@ -33,6 +31,9 @@ window.onload = function () {
             },
             sendAddMember(index) {
                 ipcRenderer.send('conn', { type: TYPE.ADDMEMBER, data: { groupName: this.groups[index].name, memberName: this.groups[index].newmemberName, ip: this.groups[index].newip } })
+            },
+            sendDeleteMember(index, mindex) {
+                ipcRenderer.send('conn', { type: TYPE.DELETEMEMBER, data: { groupName: this.groups[index].name, memberName: this.groups[index].members[mindex].name } })
             }
         },
         mounted() {

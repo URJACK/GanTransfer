@@ -53,10 +53,13 @@ class Group {
         return true
     }
     deleteMember(name: string): boolean {
+        console.log("DEBUG deleteMember")
+        console.log(this.members)
         for (let i = 0; i < this.members.length; ++i) {
             if (this.members[i].name == name) {
                 //发现同名用户
-                this.members.splice(i, i)
+                this.members.splice(i, 1)
+                console.log(this.members)
                 return true
             }
         }
@@ -102,6 +105,10 @@ function addMember(groupName: string, memberName: string, ip: string): boolean {
 }
 function deleteMember(groupName: string, memberName: string) {
     let group: Group | null = getGroup(groupName)
+    console.log("DEBUG")
+    console.log(groupName)
+    console.log(memberName)
+    console.log(group)
     if (group == null) {
         return false
     }
