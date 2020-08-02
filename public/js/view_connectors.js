@@ -30,6 +30,9 @@ window.onload = function () {
         methods: {
             addGroup() {
                 ipcRenderer.send('conn', { type: TYPE.ADDGROUP, data: { groupName: this.newGroupName } })
+            },
+            sendAddMember(index) {
+                ipcRenderer.send('conn', { type: TYPE.ADDMEMBER, data: { groupName: this.groups[index].name, memberName: this.groups[index].newmemberName, ip: this.groups[index].newip } })
             }
         },
         mounted() {

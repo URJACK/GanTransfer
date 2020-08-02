@@ -26,7 +26,7 @@
         </div>
         <div class="my-3 p-3 bg-white rounded shadow-sm" v-for="(group,index) in groups">
             <h6 class="border-bottom border-gray pb-2 mb-0">{{group.name}}</h6>
-            <div class="media text-muted pt-3" v-for="(member,index) in group.menbers">
+            <div class="media text-muted pt-3" v-for="(member,index) in group.members">
                 <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg"
                     preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32">
                     <title>Placeholder</title>
@@ -38,9 +38,20 @@
                     一个普通用户
                 </p>
             </div>
-            <small class="d-block text-right mt-3">
-                <a href="#">Hidden</a>
-            </small>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="新成员名称" v-model="group.newmemberName">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="新成员IP地址" v-model="group.newip">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary btn-block" type="button" v-on:click="sendAddMember(index)">确认</button>
+                </div>
+                <!-- <small class="d-block text-right mt-3">
+                    <a href="#">Add</a>
+                </small> -->
+            </div>
         </div>
         <hr class="mb-4">
         <label for="firstName">GroupName</label>

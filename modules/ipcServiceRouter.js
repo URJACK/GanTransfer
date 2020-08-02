@@ -43,7 +43,6 @@ var IpcServiceRouter = /** @class */ (function () {
             var packet = { type: type, data: args.data };
             packet = transferHandler.dataGet(packet);
             console.log(packet);
-            console.log(packet.data);
             e.reply('conn_data', packet);
         });
     }

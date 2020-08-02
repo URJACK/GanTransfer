@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMember = exports.getGroupByName = exports.getAllInfo = exports.deleteMenber = exports.addMenber = exports.deleteGroup = exports.addGroup = void 0;
+exports.getMember = exports.getGroupByName = exports.getAllInfo = exports.deleteMember = exports.addMember = exports.deleteGroup = exports.addGroup = void 0;
 var Content = /** @class */ (function () {
     function Content(isMe, text) {
         this.isMe = isMe;
@@ -23,34 +23,38 @@ var Member = /** @class */ (function () {
 var Group = /** @class */ (function () {
     function Group(name) {
         this.name = name;
-        this.menbers = [];
+        this.members = [];
     }
-    Group.prototype.getMenbers = function () {
-        return this.menbers;
+    Group.prototype.getMembers = function () {
+        return this.members;
     };
     Group.prototype.getMember = function (index) {
-        return this.menbers[index];
+        return this.members[index];
     };
     Group.prototype.getLength = function () {
-        return this.menbers.length;
+        return this.members.length;
     };
     Group.prototype.addMember = function (newMember) {
+        console.log(" ADDMEMBER");
+        console.log(newMember);
         //检查该组内是否有同名用户
-        for (var i = 0; i < this.menbers.length; ++i) {
-            if (this.menbers[i].name == name) {
+        for (var i = 0; i < this.members.length; ++i) {
+            if (this.members[i].name == newMember.name) {
                 //发现同名用户
                 return false;
             }
         }
+        console.log(" AFTER ADDMEMBER");
         //没有同名用户，添加成功
-        this.menbers.push(newMember);
+        this.members.push(newMember);
+        console.log(this.members);
         return true;
     };
     Group.prototype.deleteMember = function (name) {
-        for (var i = 0; i < this.menbers.length; ++i) {
-            if (this.menbers[i].name == name) {
+        for (var i = 0; i < this.members.length; ++i) {
+            if (this.members[i].name == name) {
                 //发现同名用户
-                this.menbers.splice(i, i);
+                this.members.splice(i, i);
                 return true;
             }
         }
@@ -89,7 +93,7 @@ function getGroup(groupName) {
     }
     return null;
 }
-function addMenber(groupName, memberName, ip) {
+function addMember(groupName, memberName, ip) {
     var group = getGroup(groupName);
     if (group == null) {
         return false;
@@ -97,15 +101,15 @@ function addMenber(groupName, memberName, ip) {
     var newMember = new Member(memberName, ip);
     return group.addMember(newMember);
 }
-exports.addMenber = addMenber;
-function deleteMenber(groupName, memberName) {
+exports.addMember = addMember;
+function deleteMember(groupName, memberName) {
     var group = getGroup(groupName);
     if (group == null) {
         return false;
     }
     return group.deleteMember(memberName);
 }
-exports.deleteMenber = deleteMenber;
+exports.deleteMember = deleteMember;
 function getAllInfo() {
     return groups;
 }
@@ -119,7 +123,7 @@ function getMember(groupName, memberName) {
     if (localGroup == null) {
         return null;
     }
-    var members = localGroup.getMenbers();
+    var members = localGroup.getMembers();
     for (var i = 0; i < members.length; i++) {
         var member = members[i];
         if (member.name == memberName) {

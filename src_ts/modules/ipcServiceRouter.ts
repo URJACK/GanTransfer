@@ -23,7 +23,6 @@ class IpcServiceRouter {
             let packet: TransferPacket = { type: type, data: args.data }
             packet = transferHandler.dataGet(packet)
             console.log(packet)
-            console.log(packet.data)
             e.reply('conn_data', packet)
         })
     }

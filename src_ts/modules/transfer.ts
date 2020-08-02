@@ -29,12 +29,11 @@ class TransferHandler {
             }
             return e;
         } else if (e.type == TransferType.AddMember) {
-            let packet: ConnectorPacket = { groupName: e.data.groupName, memberName: e.data.memberName, ip: e.data.ip }
             if (e.data.groupName == null || e.data.memberName == null || e.data.ip == null) {
                 e.status = false
                 return e
             }
-            e.status = StorageManager.addMenber(e.data.groupName, e.data.memberName, e.data.ip)
+            e.status = StorageManager.addMember(e.data.groupName, e.data.memberName, e.data.ip)
             return e
 
         } else if (e.type == TransferType.DeleteMember) {
@@ -43,7 +42,7 @@ class TransferHandler {
                 e.status = false
             }
             else {
-                e.status = StorageManager.deleteMenber(packet.groupName, packet.memberName)
+                e.status = StorageManager.deleteMember(packet.groupName, packet.memberName)
             }
             return e
         } else {

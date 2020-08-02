@@ -22,37 +22,41 @@ class Member {
 }
 class Group {
     name: string;
-    menbers: Array<Member>;
+    members: Array<Member>;
     constructor(name: string) {
         this.name = name
-        this.menbers = []
+        this.members = []
     }
-    getMenbers(): Array<Member> {
-        return this.menbers;
+    getMembers(): Array<Member> {
+        return this.members;
     }
     getMember(index: number): Member {
-        return this.menbers[index]
+        return this.members[index]
     }
     getLength(): number {
-        return this.menbers.length;
+        return this.members.length;
     }
     addMember(newMember: Member): boolean {
+        console.log(" ADDMEMBER")
+        console.log(newMember)
         //检查该组内是否有同名用户
-        for (let i = 0; i < this.menbers.length; ++i) {
-            if (this.menbers[i].name == name) {
+        for (let i = 0; i < this.members.length; ++i) {
+            if (this.members[i].name == newMember.name) {
                 //发现同名用户
                 return false
             }
         }
+        console.log(" AFTER ADDMEMBER")
         //没有同名用户，添加成功
-        this.menbers.push(newMember)
+        this.members.push(newMember)
+        console.log(this.members)
         return true
     }
     deleteMember(name: string): boolean {
-        for (let i = 0; i < this.menbers.length; ++i) {
-            if (this.menbers[i].name == name) {
+        for (let i = 0; i < this.members.length; ++i) {
+            if (this.members[i].name == name) {
                 //发现同名用户
-                this.menbers.splice(i, i)
+                this.members.splice(i, i)
                 return true
             }
         }
@@ -88,7 +92,7 @@ function getGroup(groupName: string): Group | null {
     }
     return null
 }
-function addMenber(groupName: string, memberName: string, ip: string): boolean {
+function addMember(groupName: string, memberName: string, ip: string): boolean {
     let group: Group | null = getGroup(groupName)
     if (group == null) {
         return false
@@ -96,7 +100,7 @@ function addMenber(groupName: string, memberName: string, ip: string): boolean {
     let newMember = new Member(memberName, ip)
     return group.addMember(newMember)
 }
-function deleteMenber(groupName: string, memberName: string) {
+function deleteMember(groupName: string, memberName: string) {
     let group: Group | null = getGroup(groupName)
     if (group == null) {
         return false
@@ -114,7 +118,7 @@ function getMember(groupName: string, memberName: string): Member | null {
     if (localGroup == null) {
         return null
     }
-    let members: Array<Member> = localGroup.getMenbers()
+    let members: Array<Member> = localGroup.getMembers()
     for (let i = 0; i < members.length; i++) {
         let member = members[i];
         if (member.name == memberName) {
@@ -123,4 +127,4 @@ function getMember(groupName: string, memberName: string): Member | null {
     }
     return null
 }
-export { addGroup, deleteGroup, addMenber, deleteMenber, getAllInfo, getGroupByName, getMember }
+export { addGroup, deleteGroup, addMember, deleteMember, getAllInfo, getGroupByName, getMember }
